@@ -1,14 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { useEffect } from 'react'
 import './App.css'
+import AppRouter from './routes/AppRouter'
+import { useDispatch } from 'react-redux'
+import { login } from './features/auth/authSlice'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('token')
+    const user = JSON.parse(localStorage.getItem("user"))
+
+    if (accessToken && user) {
+      dispatch(login({ accessToken, user }))
+    }
+  }, [dispatch])
 
   return (
-    <h1 className='text-5xl text-red-500 font-bold'>Heloo</h1>
+    <>
+      <AppRouter />
+      <Toaster position="top-center" />
+    </>
   )
 }
 
