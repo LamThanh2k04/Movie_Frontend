@@ -35,9 +35,9 @@ const LoginPage = () => {
       // Kết quả: {age: 20}
     })
     setErrors((prev) => ({
-        ...prev,
-        [e.target.name] : ''
-      }))
+      ...prev,
+      [e.target.name]: ''
+    }))
   }
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -46,11 +46,16 @@ const LoginPage = () => {
     if (Object.keys(newErrors).length > 0) return // return ở đây là để dừng hàm này hk có gọi api
     try {
       const response = await loginApi(formData)
-      dispatch(login(response.data.data))
-      localStorage.setItem('token', response.data.data.accessToken)
-      localStorage.setItem('user', JSON.stringify(response.data.data.user))
+      const data = response.data.data
+      dispatch(login(data))
+      localStorage.setItem('token', data.accessToken)
+      localStorage.setItem('user', JSON.stringify(data.user))
       toast.success('Đăng nhập thành công')
-      navigate('/')
+      if(data.user.role === 'ADMIN') {
+        navigate('/admin')
+      } else {
+        navigate('/')
+      }
     } catch (error) {
       toast.error('Sai email hoặc mật khẩu')
       console.log(error)
@@ -116,7 +121,7 @@ const LoginPage = () => {
                 placeholder="Mật khẩu"
                 className="peer w-full bg-[#1c1b1b] text-white p-4 rounded-lg outline-none placeholder-transparent focus:ring-2 focus:ring-red-600"
               />
- {errors.password && (
+              {errors.password && (
                 <p className="text-red-500 text-xs mt-1 ml-1">
                   {errors.password}
                 </p>
