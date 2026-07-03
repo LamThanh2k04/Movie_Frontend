@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 
+const accessToken = localStorage.getItem("token");
+const user = JSON.parse(localStorage.getItem("user"));
+
 const initialState = {
-    user : null,
-    accessToken: null,
-    isAuthenticated : false
-}
+    user: user || null,
+    accessToken: accessToken || null,
+    isAuthenticated: !!accessToken,
+};
 const authSlice = createSlice({
     name : 'auth', // tên slice
     // Đây là dữ liệu mặc định nằm ở đây
@@ -21,7 +24,7 @@ const authSlice = createSlice({
         logout(state){
             state.user = null
             state.accessToken = null
-            state.isAuthenticated = null
+            state.isAuthenticated = false
         }
     }
 })
