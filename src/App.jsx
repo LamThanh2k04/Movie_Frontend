@@ -8,15 +8,6 @@ import { Toaster } from 'react-hot-toast'
 function App() {
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem('token')
-    const user = JSON.parse(localStorage.getItem("user"))
-
-    if (accessToken && user) {
-      dispatch(login({ accessToken, user }))
-    }
-  }, [dispatch])
-
   return (
     <>
       <AppRouter />
