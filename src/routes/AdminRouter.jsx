@@ -1,11 +1,10 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom'
+import useAuth from '../hooks/useAuth';
 
 const AdminRouter = () => {
-    const { user, isAuthenticated } = useSelector(
-        (state) => state.auth
-    );
+    const { user, isAuthenticated } = useAuth()
 
     if (!isAuthenticated) {
         return <Navigate to="/login" replace />;
