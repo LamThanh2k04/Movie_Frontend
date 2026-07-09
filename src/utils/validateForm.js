@@ -17,9 +17,7 @@ export const validateFormLogin = (formData) => {
 }
 
 export const validateFormRegister = (formData) => {
-    let errors = {}
-
-
+    let errors = {}    
     if(!formData.name) {
         errors.name = 'Tên không được để trống'
     }
