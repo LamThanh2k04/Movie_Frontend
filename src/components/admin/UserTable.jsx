@@ -8,6 +8,8 @@ const UserTable = ({
     loading,
     page,
     pagination,
+    handleEdit,
+    handleToggleStatus
 }) => {
     if (loading) {
         return (
@@ -48,6 +50,9 @@ const UserTable = ({
 
                         <th className="px-6 py-4 text-left">
                             Ngày tham gia
+                        </th>
+                        <th className="px-6 py-4 text-left">
+                            Trạng thái
                         </th>
 
                         <th className="px-6 py-4 text-center">
@@ -113,12 +118,23 @@ const UserTable = ({
                             </td>
 
                             <td className="px-6 py-4">
+                                <span
+                                    className={`px-3 py-1 rounded-full text-sm font-medium ${user.isActive
+                                            ? "bg-green-500/20 text-green-400"
+                                            : "bg-red-500/20 text-red-400"
+                                        }`}
+                                >
+                                    {user.isActive ? "Hoạt động" : "Đã khóa"}
+                                </span>
+                            </td>
+
+                            <td className="px-6 py-4">
                                 <div className="flex justify-center gap-3">
-                                    <button className="p-2 rounded-lg bg-zinc-800 hover:bg-red-600 text-gray-300 hover:text-white transition">
+                                    <button onClick={() => handleEdit(user)} className="p-2 rounded-lg bg-zinc-800 hover:bg-red-600 text-gray-300 hover:text-white transition">
                                         <SquarePen size={18} />
                                     </button>
 
-                                    <button
+                                    <button onClick={() => handleToggleStatus(user.id)}
                                         className="p-2 rounded-lg bg-zinc-800 hover:bg-red-600 transition"
                                     >
                                         {user.isActive ? (
