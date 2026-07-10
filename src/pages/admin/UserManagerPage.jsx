@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { CirclePlus, Users, Shield, User } from "lucide-react";
 import usePagination from "../../hooks/usePagination";
 import useSearch from "../../hooks/useSearch";
-import { getAllUsers } from "../../services/admin/userApi";
+import { getAllUsers, updateUserStatus } from "../../services/admin/userApi";
 import UserTable from "../../components/admin/UserTable";
 import UserSearch from "../../components/admin/UserSearch";
 import UserPagination from "../../components/admin/UserPagination";
-import UserModal from "../../components/admin/UserModal";
+import CeateUserModal from "../../components/admin/CreateUserModal";
+import UpdateUserModal from "../../components/admin/UpdateUserModal";
+import toast from "react-hot-toast";
 
 const UserManagerPage = () => {
   const { page, setPage } = usePagination();
@@ -15,10 +17,10 @@ const UserManagerPage = () => {
   const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState(null);
   const [open, setOpen] = useState(false);
-
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [openUpdate, setOpenUpdate] = useState(false);
   const fetchUsers = async () => {
     setLoading(true);
-
     try {
       const params = {};
 
@@ -42,14 +44,29 @@ const UserManagerPage = () => {
     }
   };
 
+  const handleEdit = (user) => {
+    setSelectedUser(user);
+    setOpenUpdate(true);
+  }
+
+  const handleToggleStatus = async(userId) => {
+      try {
+        await updateUserStatus(userId)
+        toast.success('Cập nhật trạng thái người dùng thành công')
+        await fetchUsers()
+      } catch (error) {
+        toast.error('Cập nhật trạng thái người dùng thất bại')
+      }
+  }
+
   useEffect(() => {
     fetchUsers();
   }, [page, search]);
 
-  
+
   return (
     <div className="text-white">
-   
+
       <div className="mb-8">
         <h1 className="text-3xl font-bold">
           Quản lý người dùng
@@ -80,6 +97,8 @@ const UserManagerPage = () => {
         loading={loading}
         page={page}
         pagination={pagination}
+        handleEdit={handleEdit}
+        handleToggleStatus = {handleToggleStatus}
       />
 
       <UserPagination
@@ -88,10 +107,20 @@ const UserManagerPage = () => {
         pagination={pagination}
       />
 
-      <UserModal
+      <CeateUserModal
         open={open}
         onClose={() => setOpen(false)}
         fetchUsers={fetchUsers}
+      />
+
+      <UpdateUserModal
+        open={openUpdate}
+        onClose={() => {
+          setOpenUpdate(false);
+          setSelectedUser(null);
+        }}
+        fetchUsers={fetchUsers}
+        user={selectedUser}
       />
     </div>
   );
