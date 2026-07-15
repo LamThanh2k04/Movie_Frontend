@@ -16,12 +16,12 @@ const UpdateUserModal = ({ open, onClose, fetchUsers, user }) => {
             setFormData({
                 name: user.name || "",
                 email: user.email || "",
-                passsword: user.password || ""
+                password: ""
             })
             setAvatar(null);
         }
     }, [user])
-
+    console.log(formData.password)
     const hanleChange = (e) => {
         const { name, value } = e.target
         setFormData((prev) => ({
@@ -35,13 +35,15 @@ const UpdateUserModal = ({ open, onClose, fetchUsers, user }) => {
             const data = new FormData()
             data.append("name", formData.name);
             data.append("email", formData.email);
-            data.append("password", formData.password);
+            if (formData.password) {
+                data.append("password", formData.password);
+            }
 
             if (avatar) {
                 data.append("avatar", avatar);
             }
             setLoading(true);
-            await updateUser(user.id,data)
+            await updateUser(user.id, data)
             toast.success("Cập nhật người dùng thành công");
             setFormData({
                 name: '',

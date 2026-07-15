@@ -41,7 +41,7 @@ const CeateUserModal = ({ open, onClose, fetchUsers }) => {
       onClose()
       await fetchUsers()
     } catch (error) {
-      toast.error('Tạo người dùng thất bại', error)
+      toast.error('Tạo người dùng thất bại')
     } finally {
       setLoading(false)
     }
