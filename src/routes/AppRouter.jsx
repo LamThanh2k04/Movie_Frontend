@@ -11,6 +11,7 @@ import UserManagerPage from '../pages/admin/UserManagerPage';
 import ActorManagerPage from '../pages/admin/ActorManagerPage';
 import CountryManagerPage from '../pages/admin/CountryManagerPage';
 import MovieManagerPage from '../pages/admin/MovieManagerPage';
+import GenreManagerPage from '../pages/admin/GenreManagerPage';
 const AppRouter = () => {
     return (
         <BrowserRouter>
@@ -24,6 +25,7 @@ const AppRouter = () => {
                         <Route path="/admin/actors" element={<ActorManagerPage />} />
                         <Route path="/admin/countries" element={<CountryManagerPage />} />
                         <Route path="/admin/movies" element={<MovieManagerPage />} />
+                        <Route path="/admin/genres" element={<GenreManagerPage />} />
                     </Route>
                 </Route>
                 <Route element={<MainLayout />}>
