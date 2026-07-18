@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import usePagination from '../../hooks/usePagination'
 import useSearch from '../../hooks/useSearch'
-import { getAllGenres } from '../../services/admin/genreApi'
+import { getAllGenres, updateGenreStatus } from '../../services/admin/genreApi'
 import GenreSearch from '../../components/admin/GenreSearch'
 import GenreTable from '../../components/admin/GenreTable'
 import GenrePagination from '../../components/admin/GenrePagination'
 import { CirclePlus } from 'lucide-react'
 import CreateGenreModal from '../../components/admin/CreateGenreModal'
+import UpdateUserModal from '../../components/admin/UpdateUserModal'
+import toast from 'react-hot-toast'
+import UpdateGenreModal from '../../components/admin/UpdateGenreModal'
 
 const GenreManagerPage = () => {
   const { page, setPage } = usePagination()
@@ -14,7 +17,9 @@ const GenreManagerPage = () => {
   const [pagination, setPagination] = useState(null)
   const [genres, setGenres] = useState([])
   const [loading, setLoading] = useState(false)
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [selectedGenre, setSelectedGenre] = useState(null);
+  const [openUpdate, setOpenUpdate] = useState(false);
   const fetchGenres = async () => {
     setLoading(true)
     try {
@@ -34,6 +39,21 @@ const GenreManagerPage = () => {
       console.log('Lấy danh sách thể loại thất bại', error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleEdit = (genre) => {
+    setSelectedGenre(genre);
+    setOpenUpdate(true);
+  }
+
+  const handleToggleStatus = async (genreId) => {
+    try {
+      await updateGenreStatus(genreId)
+      toast.success('Cập nhật trạng thái thể loại thành công')
+      await fetchGenres()
+    } catch (error) {
+      toast.error('Cập nhật trạng thái thể loại thất bại')
     }
   }
 
@@ -69,6 +89,8 @@ const GenreManagerPage = () => {
         loading={loading}
         page={page}
         pagination={pagination}
+        handleEdit={handleEdit}
+        handleToggleStatus={handleToggleStatus}
       />
       <GenrePagination
         page={page}
@@ -77,9 +99,19 @@ const GenreManagerPage = () => {
       />
 
       <CreateGenreModal
-      open={open}
-      onClose={()=> setOpen(false)}
-      fetchGenre={fetchGenres}
+        open={open}
+        onClose={() => setOpen(false)}
+        fetchGenre={fetchGenres}
+      />
+
+      <UpdateGenreModal
+        open={openUpdate}
+        onClose={() => {
+          setOpenUpdate(false);
+          setSelectedGenre(null);
+        }}
+        fetchGenres={fetchGenres}
+        genre={selectedGenre}
       />
     </div>
   )

@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import usePagination from '../../hooks/usePagination'
 import useSearch from '../../hooks/useSearch'
-import { getAllActors } from '../../services/admin/actorApi'
+import { getAllActors, updateActorStatus } from '../../services/admin/actorApi'
 import ActorSearch from '../../components/admin/ActorSearch'
 import ActorTable from '../../components/admin/ActorTable'
 import ActorPagination from '../../components/admin/ActorPagination'
 import { CirclePlus } from 'lucide-react'
+import toast from 'react-hot-toast'
+import CreateActorModal from '../../components/admin/CreateActorModal'
+import UpdateActorModal from '../../components/admin/UpdateActorModal'
 
 const ActorManagerPage = () => {
   const { page, setPage } = usePagination()
@@ -13,16 +16,18 @@ const ActorManagerPage = () => {
   const [pagination, setPagination] = useState(null)
   const [actors, setActors] = useState([])
   const [loading, setLoading] = useState(false)
-
+  const [open, setOpen] = useState(false)
+  const [selectedActor, setSelectedActor] = useState(null)
+  const [openUpdate, setOpenUpdate] = useState(false)
   const fetchActor = async () => {
     setLoading(true)
     try {
       const params = {}
-      if(search) {
+      if (search) {
         params.search = search
       }
-      if(page > 1) {
-         params.page = page;
+      if (page > 1) {
+        params.page = page;
       }
       const response = await getAllActors(params)
       const data = response.data.data
@@ -38,8 +43,21 @@ const ActorManagerPage = () => {
 
   useEffect(() => {
     fetchActor()
-  },[search,page])
+  }, [search, page])
 
+  const handleEdit = (actor) => {
+    setSelectedActor(actor)
+    setOpenUpdate(true)
+  }
+  const handleToggleStatus = async (actorId) => {
+    try {
+      await updateActorStatus(actorId)
+      toast.success('Cập nhật trạng thái diễn viên thành công')
+      await fetchActor()
+    } catch (error) {
+      toast.error('Cập nhật trạng thái diễn viên thất bại')
+    }
+  }
   return (
     <div className='text-white'>
       <div className="mb-8">
@@ -51,12 +69,12 @@ const ActorManagerPage = () => {
           Quản lý diễn viên có trong hệ thống
         </p>
       </div>
-      <div className = 'flex justify-end gap-4 mb-6'>
+      <div className='flex justify-end gap-4 mb-6'>
         <ActorSearch
-        search = {search}
-        setSearch = {setSearch}
+          search={search}
+          setSearch={setSearch}
         />
-          <button
+        <button
           onClick={() => setOpen(true)}
           className="flex items-center gap-2 px-4 py-2 bg-red-600 rounded-lg hover:bg-red-700 transition"
         >
@@ -65,15 +83,33 @@ const ActorManagerPage = () => {
         </button>
       </div>
       <ActorTable
-      actors = {actors}
-      loading = {loading}
-      page = {page}
-      pagination = {pagination}
+        actors={actors}
+        loading={loading}
+        page={page}
+        pagination={pagination}
+        handleEdit = {handleEdit}
+        handleToggleStatus = {handleToggleStatus}
       />
       <ActorPagination
-        page = {page}
-        setPage = {setPage}
-        pagination = {pagination}
+        page={page}
+        setPage={setPage}
+        pagination={pagination}
+      />
+
+      <CreateActorModal
+        open={open}
+        onClose={() => setOpen(false)}
+        fetchActors={fetchActor}
+      />
+
+      <UpdateActorModal
+      open={openUpdate}
+      onClose={() => {
+        setSelectedActor(null)
+        setOpenUpdate(false)
+      }}
+      fetchActors={fetchActor}
+      actor={selectedActor}
       />
     </div>
   )
