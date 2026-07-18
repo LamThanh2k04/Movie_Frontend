@@ -1,7 +1,7 @@
 import { Lock, LockOpen, SquarePen, User } from 'lucide-react'
 import React from 'react'
 
-const ActorTable = ({ actors, loading, page, pagination }) => {
+const ActorTable = ({ actors, loading, page, pagination, handleEdit, handleToggleStatus }) => {
 
     if (loading) {
         return <div className='text-center text-gray-400 py-10'> Đang tải dữ liệu</div>
@@ -107,8 +107,8 @@ const ActorTable = ({ actors, loading, page, pagination }) => {
                             <td className="px-6 py-4">
                                 <span
                                     className={`px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap ${actor.isActive
-                                            ? "bg-green-500/20 text-green-400"
-                                            : "bg-red-500/20 text-red-400"
+                                        ? "bg-green-500/20 text-green-400"
+                                        : "bg-red-500/20 text-red-400"
                                         }`}
                                 >
                                     {actor.isActive
@@ -120,13 +120,13 @@ const ActorTable = ({ actors, loading, page, pagination }) => {
 
                             <td className="px-6 py-4">
                                 <div className="flex justify-center gap-3">
-                                    <button
+                                    <button onClick={() => handleEdit(actor)}
                                         className="p-2 rounded-lg bg-zinc-800 hover:bg-blue-600 text-gray-300 hover:text-white transition"
                                     >
                                         <SquarePen size={18} />
                                     </button>
 
-                                    <button
+                                    <button onClick={() => handleToggleStatus(actor.id)}
                                         className="p-2 rounded-lg bg-zinc-800 hover:bg-red-600 transition"
                                     >
                                         {actor.isActive ? (

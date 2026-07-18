@@ -1,7 +1,7 @@
 import { Lock, LockOpen, SquarePen } from "lucide-react";
 import React from "react";
 
-const CountryTable = ({ countries, loading, page, pagination }) => {
+const CountryTable = ({ countries, loading, page, pagination, handleEdit, handleToggleStatus }) => {
     if (loading) {
         return (
             <div className="text-center text-gray-400 py-10">
@@ -104,13 +104,13 @@ const CountryTable = ({ countries, loading, page, pagination }) => {
                             {/* Hành động */}
                             <td className="px-6 py-4">
                                 <div className="flex justify-center gap-3">
-                                    <button
+                                    <button onClick={() => handleEdit(country)}
                                         className="p-2 rounded-lg bg-zinc-800 hover:bg-blue-600 text-gray-300 hover:text-white transition"
                                     >
                                         <SquarePen size={18} />
                                     </button>
 
-                                    <button
+                                    <button onClick={() => handleToggleStatus(country.id)}
                                         className="p-2 rounded-lg bg-zinc-800 hover:bg-red-600 transition"
                                     >
                                         {country.isActive ? (

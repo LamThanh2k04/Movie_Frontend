@@ -1,7 +1,7 @@
 import { LockOpen, SquarePen, Lock } from 'lucide-react';
 import React from 'react'
 
-const MovieTable = ({ movies, loading, page, pagination }) => {
+const MovieTable = ({ movies, loading, page, pagination,handleEdit, handleToggleStatus }) => {
     console.log(movies)
     if (loading) {
         return (
