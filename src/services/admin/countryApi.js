@@ -17,5 +17,5 @@ export const getAllCountries = (params) => {
 }
 
 export const getAllCountriesSimple = () => {
-    return api.get('/country/getAllCountries')
+    return api.get('/country/getAllCountriesSimple')
 }
