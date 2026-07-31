@@ -52,7 +52,7 @@ const Sidebar = () => {
 
           <div>
             <h1 className="text-lg font-bold tracking-wider text-zinc-100">
-              MOVIE
+              CINESTREAM
             </h1>
             <p className="text-[11px] font-medium text-zinc-500 uppercase tracking-tight">
               Admin Dashboard
