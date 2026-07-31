@@ -1,4 +1,4 @@
-import api from "../axios"
+import api from "./axios"
 
 export const createGenre = (data) => {
     return api.post('/genre/createGenre', data)

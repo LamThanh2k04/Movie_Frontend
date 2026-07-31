@@ -1,4 +1,4 @@
-import api from "../axios"
+import api from "./axios"
 
 export const getAllOverView = () => {
     return api.get('/dashboard/getAllOverView')
