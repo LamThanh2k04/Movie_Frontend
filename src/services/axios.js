@@ -27,11 +27,11 @@ api.interceptors.response.use(
     (error) => {
         if (error.response?.status === 401) {
 
-            // Xóa dữ liệu đăng nhập
+            
             localStorage.removeItem("token");
             localStorage.removeItem("user");
 
-            // Cập nhật Redux
+         
             store.dispatch(logout());
 
        
