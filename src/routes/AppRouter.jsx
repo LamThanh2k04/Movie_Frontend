@@ -12,13 +12,15 @@ import ActorManagerPage from '../pages/admin/ActorManagerPage';
 import CountryManagerPage from '../pages/admin/CountryManagerPage';
 import MovieManagerPage from '../pages/admin/MovieManagerPage';
 import GenreManagerPage from '../pages/admin/GenreManagerPage';
+import MovieDetailPage from '../pages/MovieDetailPage';
+import FavoriteUserPage from '../pages/admin/FavoriteUserPage';
 const AppRouter = () => {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
-                <Route element={<AdminRouter/>}>
+                <Route element={<AdminRouter />}>
                     <Route element={<AdminLayout />} >
                         <Route path="/admin" element={<DashboardAdminPage />} />
                         <Route path="/admin/users" element={<UserManagerPage />} />
@@ -30,6 +32,8 @@ const AppRouter = () => {
                 </Route>
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/movie/detailMovie/:movieId" element={<MovieDetailPage />} />
+                    <Route path="/user/favoriteMovie" element={<FavoriteUserPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>
