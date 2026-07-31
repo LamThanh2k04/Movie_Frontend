@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import usePagination from '../../hooks/usePagination'
 import useSearch from '../../hooks/useSearch'
-import { getAllGenres, updateGenreStatus } from '../../services/admin/genreApi'
+import { getAllGenres, updateGenreStatus } from '../../services/genreApi'
 import GenreSearch from '../../components/admin/GenreSearch'
 import GenreTable from '../../components/admin/GenreTable'
 import GenrePagination from '../../components/admin/GenrePagination'

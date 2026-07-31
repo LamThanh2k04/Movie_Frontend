@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getAllCountries, updateCountryStatus } from '../../services/admin/countryApi'
+import { getAllCountries, updateCountryStatus } from '../../services/countryApi'
 import usePagination from '../../hooks/usePagination'
 import useSearch from '../../hooks/useSearch'
 import CountryTable from '../../components/admin/CountryTable'

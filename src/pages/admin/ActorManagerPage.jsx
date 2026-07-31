@@ -1,7 +1,7 @@
 import React, { use, useEffect, useState } from 'react'
 import usePagination from '../../hooks/usePagination'
 import useSearch from '../../hooks/useSearch'
-import { getAllActors, updateActorStatus } from '../../services/admin/actorApi'
+import { getAllActors, updateActorStatus } from '../../services/actorApi'
 import ActorSearch from '../../components/admin/ActorSearch'
 import ActorTable from '../../components/admin/ActorTable'
 import ActorPagination from '../../components/admin/ActorPagination'

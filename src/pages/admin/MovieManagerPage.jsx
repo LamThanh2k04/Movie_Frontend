@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import usePagination from '../../hooks/usePagination';
 import useSearch from '../../hooks/useSearch';
-import { getAllMovies, updateMovieStatus } from '../../services/admin/movieApi';
+import { getAllMovies, updateMovieStatus } from '../../services/movieApi';
 import MovieTable from '../../components/admin/MovieTable';
 import MovieSearch from '../../components/admin/MovieSearch';
 import { CirclePlus } from 'lucide-react';

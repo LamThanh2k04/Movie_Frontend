@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CirclePlus, Users, Shield, User } from "lucide-react";
 import usePagination from "../../hooks/usePagination";
 import useSearch from "../../hooks/useSearch";
-import { getAllUsers, updateUserStatus } from "../../services/admin/userApi";
+import { getAllUsers, updateUserStatus } from "../../services/userApi";
 import UserTable from "../../components/admin/UserTable";
 import UserSearch from "../../components/admin/UserSearch";
 import UserPagination from "../../components/admin/UserPagination";
